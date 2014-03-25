@@ -19,7 +19,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.Toast;
+
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -31,6 +31,13 @@ public class SearchActivity extends Activity {
 	ArrayList<ImageResult> imageResults = new ArrayList<ImageResult>();
 	ImageResultArrayAdapter imageAdapter;
 	AsyncHttpClient client;
+	public static final int FILTER_OPTIONS = 123;
+	public static final String FILTER_STRING = "filter string";
+	Filters filters;
+	String size_filter;
+	String color_filter;
+	String image_filter;
+	String site_filter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +45,11 @@ public class SearchActivity extends Activity {
 		setContentView(R.layout.activity_search);
 		
 		client = new AsyncHttpClient();
+		
+		size_filter = "";
+		color_filter = "";
+		image_filter = "";
+		site_filter = "";
 		
 		setupViews();
 		imageAdapter = new ImageResultArrayAdapter(this, imageResults);
@@ -64,10 +76,10 @@ public class SearchActivity extends Activity {
 	}
 	
 	public void onClickSettings(MenuItem menuItem) {
-		Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
 		
 		Intent i = new Intent(this, FilterActivity.class);
-		startActivity(i);
+		startActivityForResult(i, FILTER_OPTIONS);
+		
 	}
 	
 	public void setupViews() {
@@ -89,10 +101,13 @@ public class SearchActivity extends Activity {
 		
 		if (offset <=8) {
 			String query = etQuery.getText().toString();
-			Toast.makeText(this, String.valueOf(offset), Toast.LENGTH_SHORT).show();
 			//https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=Android
 			client.get("https://ajax.googleapis.com/ajax/services/search/images?rsz=8&" 
-						+ "start=" + offset +"&v=1.0&q=" + Uri.encode(query), 
+						+ "start=" + offset +
+						"&imgsz=" + size_filter +
+						"&imgtype=" + image_filter +
+						"&as_sitesearch=" + site_filter +
+						"&imgcolor=" + color_filter + "&v=1.0&q=" + Uri.encode(query), 
 						new JsonHttpResponseHandler() {
 							@Override
 							public void onSuccess(JSONObject response) {
@@ -114,10 +129,13 @@ public class SearchActivity extends Activity {
 	
 	public void onImageSearch(View v) {
 		String query = etQuery.getText().toString();
-		Toast.makeText(this, query, Toast.LENGTH_SHORT).show();
 		//https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=Android
 		client.get("https://ajax.googleapis.com/ajax/services/search/images?rsz=8&" 
-					+ "start=" + 0 +"&v=1.0&q=" + Uri.encode(query), 
+					+ "start=" + 0 +"&imgsz=" + size_filter + 
+					"&imgcolor=" + color_filter +
+					"&imgtype=" + image_filter +
+					"&as_sitesearch=" + site_filter +
+					"&v=1.0&q=" + Uri.encode(query), 
 					new JsonHttpResponseHandler() {
 						@Override
 						public void onSuccess(JSONObject response) {
@@ -134,6 +152,19 @@ public class SearchActivity extends Activity {
 						}
 						
 					});
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == FILTER_OPTIONS) {
+			filters = (Filters) data.getSerializableExtra(FILTER_STRING);
+			String size = filters.size;
+			size_filter = size;
+			color_filter = filters.color;
+			image_filter = filters.image;
+			site_filter = filters.site;
+		}
+		
 	}
 	
 

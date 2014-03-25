@@ -11,5 +11,29 @@
     <string name="small">Small</string>
     <string name="medium">Medium</string>
     <string name="large">Large</string>
+    <string name="search_options">Advanced search options</string>
+    <string name="image_size">Image Size</string>
+    <string-array name="size_array">
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>
+    </string-array>
+        <string name="save">Save</string>
+        <string name="color">Color Filter</string>
+        <string name="image">Image Type</string>
+        <string name="site_filter">Site Filter</string>
+    <string-array name="color_array">
+        <item>Blue</item>
+        <item>Red</item>
+        <item>Yellow</item>
+        <item>Green</item>
+    </string-array>
+     <string-array name="image_array">
+        <item>Face</item>
+        <item>Photo</item>
+        <item>Clipart</item>
+        <item>Lineart</item>
+    </string-array>
+   	
 
 </resources>

@@ -16,37 +16,85 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:text="@string/size" />
+        android:text="@string/search_options" />
 
-    <Button
-        android:id="@+id/Button01"
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView1"
         android:layout_below="@+id/textView1"
-        android:layout_marginTop="14dp"
-        android:textSize="12sp"
-        android:text="@string/small" />
+        android:layout_marginTop="16dp"
+        android:text="@string/image_size" />
+
+    <Spinner
+        android:id="@+id/spinner_size"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_marginLeft="22dp"
+        android:layout_toRightOf="@+id/textView2" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/btnSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/Button01"
-        android:layout_alignBottom="@+id/Button01"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:textSize="12sp"
-        android:text="@string/medium" />
+        android:layout_marginBottom="15dp"
+        android:onClick="onSave"
+        android:text="@string/save" />
 
-    <Button
-        android:id="@+id/button2"
+    <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button1"
-        android:layout_alignBottom="@+id/button1"
-        android:layout_marginLeft="19dp"
-        android:textSize="12sp"
-        android:layout_toRightOf="@+id/button1"
-        android:text="@string/large" />
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_below="@+id/spinner_size"
+        android:text="@string/color" />
+
+    <Spinner
+        android:id="@+id/spinner_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/spinner_size"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="14dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView3"
+        android:layout_below="@+id/spinner_color"
+        android:text="@string/image" />
+
+    <Spinner
+        android:id="@+id/spinner_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/spinner_color"
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="14dp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView4"
+        android:layout_below="@+id/spinner_image"
+        android:text="@string/site_filter" />
+
+    <EditText
+        android:id="@+id/et_site"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView5"
+        android:layout_alignBottom="@+id/textView5"
+        android:layout_alignLeft="@+id/spinner_image"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
 
 </RelativeLayout>
