@@ -87,11 +87,11 @@ public class SearchActivity extends Activity {
 		gvResults = (GridView) findViewById(R.id.gvResults);
 		btnSearch = (Button) findViewById(R.id.btnSearch);
 		
-		gvResults.setOnScrollListener(new EndlessScrollListener() {
+		gvResults.setOnScrollListener(new EndlessScrollListener(8, 0) {
 			
 			@Override
 			public void onLoadMore(int page, int totalItemsCount) {
-				loadMoreData(page);
+				loadMoreData(totalItemsCount);
 				
 			}
 		});
@@ -99,32 +99,29 @@ public class SearchActivity extends Activity {
 	
 	public void loadMoreData(int offset) {
 		
-		if (offset <=8) {
-			String query = etQuery.getText().toString();
-			//https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=Android
-			client.get("https://ajax.googleapis.com/ajax/services/search/images?rsz=8&" 
-						+ "start=" + offset +
-						"&imgsz=" + size_filter +
-						"&imgtype=" + image_filter +
-						"&as_sitesearch=" + site_filter +
-						"&imgcolor=" + color_filter + "&v=1.0&q=" + Uri.encode(query), 
-						new JsonHttpResponseHandler() {
-							@Override
-							public void onSuccess(JSONObject response) {
-								JSONArray imageJsonResults = null;
-								try {
-									imageJsonResults = response.getJSONObject("responseData").getJSONArray("results");
-									imageAdapter.addAll(ImageResult.fromJSONArray(imageJsonResults));
-									
-									Log.d("DEBUG", imageResults.toString());
-								} catch (JSONException e) {
-									e.printStackTrace();
-								}
+		String query = etQuery.getText().toString();
+		//https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=Android
+		client.get("https://ajax.googleapis.com/ajax/services/search/images?rsz=8&" 
+					+ "start=" + offset +
+					"&imgsz=" + size_filter +
+					"&imgtype=" + image_filter +
+					"&as_sitesearch=" + site_filter +
+					"&imgcolor=" + color_filter + "&v=1.0&q=" + Uri.encode(query), 
+					new JsonHttpResponseHandler() {
+						@Override
+						public void onSuccess(JSONObject response) {
+							JSONArray imageJsonResults = null;
+							try {
+								imageJsonResults = response.getJSONObject("responseData").getJSONArray("results");
+								imageAdapter.addAll(ImageResult.fromJSONArray(imageJsonResults));
+								
+								Log.d("DEBUG", imageResults.toString());
+							} catch (JSONException e) {
+								e.printStackTrace();
 							}
-							
-						});
-		}
-			
+						}
+						
+					});			
 	}
 	
 	public void onImageSearch(View v) {
